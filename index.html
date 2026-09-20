@@ -29,6 +29,7 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#amenities">Amenities</a></li>
+                    <li><a href="#jobs">Govt Jobs</a></li>
                     <li><a href="#register">Register</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -92,6 +93,17 @@
         </div>
     </section>
 
+    <section id="jobs" class="alt">
+        <div class="container">
+            <h2>Latest Govt Job Openings</h2>
+            <p class="section-sub">Curated for UP State &amp; Central recruitments &middot; refreshes daily</p>
+            <p id="jobsUpdated" class="jobs-updated"></p>
+            <div id="jobsGrid" class="jobs-grid" aria-live="polite">
+                <p class="jobs-loading">Loading latest openings&hellip;</p>
+            </div>
+        </div>
+    </section>
+
     <section id="register">
         <div class="container">
             <h2>Student Registration</h2>
@@ -146,6 +158,64 @@
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        (function loadJobs() {
+            var grid = document.getElementById('jobsGrid');
+            var updated = document.getElementById('jobsUpdated');
+
+            function escapeHtml(value) {
+                return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function safeLink(url) {
+                return /^https?:\/\//i.test(url || '') ? url : null;
+            }
+
+            fetch('jobs.json?t=' + Date.now())
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    var jobs = data.jobs || [];
+
+                    if (data.sample) {
+                        updated.textContent = 'Showing sample preview — live daily updates are coming soon.';
+                    } else if (data.lastUpdated) {
+                        updated.textContent = 'Last updated: ' + new Date(data.lastUpdated).toLocaleString('en-IN', {
+                            dateStyle: 'medium', timeStyle: 'short'
+                        });
+                    }
+
+                    if (!jobs.length) {
+                        grid.innerHTML = '<p class="jobs-loading">No openings listed right now — check back soon.</p>';
+                        return;
+                    }
+
+                    grid.innerHTML = jobs.map(function (job, i) {
+                        var isCentral = job.category === 'central';
+                        var categoryLabel = isCentral ? 'Central' : 'UP State';
+                        var link = safeLink(job.link);
+                        var linkHtml = link
+                            ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener" class="job-link">View Notification &rarr;</a>'
+                            : '<span class="job-link job-link-disabled">Details coming soon</span>';
+
+                        return '' +
+                            '<div class="job-card" style="animation-delay:' + (i * 0.35) + 's">' +
+                                '<span class="job-category ' + (isCentral ? 'central' : 'state') + '">' + categoryLabel + '</span>' +
+                                '<h3>' + escapeHtml(job.title) + '</h3>' +
+                                '<p class="job-board">' + escapeHtml(job.board) + '</p>' +
+                                '<div class="job-meta">' +
+                                    '<span>Vacancies: ' + escapeHtml(job.vacancies) + '</span>' +
+                                    '<span>Last Date: ' + escapeHtml(job.lastDate) + '</span>' +
+                                '</div>' +
+                                linkHtml +
+                            '</div>';
+                    }).join('');
+                })
+                .catch(function () {
+                    grid.innerHTML = '<p class="jobs-loading">Could not load job listings right now.</p>';
+                });
+        })();
 
         document.getElementById('registerForm').addEventListener('submit', function (e) {
             e.preventDefault();

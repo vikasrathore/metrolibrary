@@ -1,0 +1,42 @@
+{
+  "lastUpdated": null,
+  "sample": true,
+  "jobs": [
+    {
+      "id": "sample-upsssc",
+      "title": "PET / Various Group C Posts",
+      "board": "UPSSSC",
+      "category": "state",
+      "vacancies": "TBD",
+      "lastDate": "TBD",
+      "link": null
+    },
+    {
+      "id": "sample-uppsc",
+      "title": "Combined State / Upper Subordinate Services",
+      "board": "UPPSC",
+      "category": "state",
+      "vacancies": "TBD",
+      "lastDate": "TBD",
+      "link": null
+    },
+    {
+      "id": "sample-ssc",
+      "title": "CGL / CHSL Recruitment",
+      "board": "SSC",
+      "category": "central",
+      "vacancies": "TBD",
+      "lastDate": "TBD",
+      "link": null
+    },
+    {
+      "id": "sample-rrb",
+      "title": "NTPC / Group D Recruitment",
+      "board": "Railway (RRB)",
+      "category": "central",
+      "vacancies": "TBD",
+      "lastDate": "TBD",
+      "link": null
+    }
+  ]
+}

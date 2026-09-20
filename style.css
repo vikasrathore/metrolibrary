@@ -223,6 +223,98 @@ h2 {
   font-size: 0.95rem;
 }
 
+.jobs-updated {
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 0.85rem;
+  margin: -32px 0 40px;
+  font-style: italic;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px 32px;
+  padding-top: 8px;
+}
+
+.jobs-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--cream-dim);
+}
+
+.job-card {
+  background: linear-gradient(160deg, var(--navy-light) 0%, var(--navy) 100%);
+  border: 1px solid rgba(201, 162, 75, 0.35);
+  border-radius: 10px;
+  padding: 26px;
+  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.6);
+  animation: jobFloat 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes jobFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.job-category {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.job-category.central {
+  border-color: var(--cream-dim);
+  color: var(--cream-dim);
+}
+
+.job-card h3 {
+  color: var(--cream);
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.job-board {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+.job-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--cream-dim);
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.job-link {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.job-link-disabled {
+  color: var(--cream-dim);
+  font-style: italic;
+  font-weight: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .job-card {
+    animation: none;
+  }
+}
+
 .register-form {
   max-width: 520px;
   margin: 0 auto;
