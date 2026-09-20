@@ -5,6 +5,7 @@
   --cream: #f5efdf;
   --cream-dim: #e6dcc3;
   --accent: #c9a24b;
+  color-scheme: dark;
 }
 
 * {
@@ -225,43 +226,61 @@ h2 {
 .register-form {
   max-width: 520px;
   margin: 0 auto;
+  background: var(--navy-light);
+  border: 1px solid var(--navy-light);
+  border-radius: 8px;
+  padding: 36px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: block;
+  width: 100%;
 }
 
 .form-row label {
+  display: block;
   font-size: 0.9rem;
   color: var(--cream-dim);
   letter-spacing: 0.5px;
+  margin-bottom: 8px;
 }
 
 .form-row input,
 .form-row textarea {
-  background: var(--navy-light);
-  border: 1px solid var(--navy-light);
-  color: var(--cream);
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--cream);
+  border: 1px solid var(--navy-dark);
+  color: var(--navy-dark);
   padding: 12px 14px;
-  border-radius: 3px;
+  border-radius: 4px;
   font-family: inherit;
   font-size: 1rem;
   resize: vertical;
+}
+
+.form-row input::placeholder,
+.form-row textarea::placeholder {
+  color: #7a7261;
 }
 
 .form-row input:focus,
 .form-row textarea:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(201, 162, 75, 0.4);
 }
 
 .register-form .btn {
   align-self: flex-start;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .form-note {
