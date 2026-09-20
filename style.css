@@ -56,16 +56,18 @@ header {
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-family: "Georgia", serif;
   font-size: 1.4rem;
   color: var(--cream);
   letter-spacing: 0.5px;
 }
 
-.brand .mark {
+.brand .logo {
+  width: 30px;
+  height: 30px;
   color: var(--accent);
-  font-size: 1.6rem;
+  flex-shrink: 0;
 }
 
 nav ul {
@@ -95,6 +97,14 @@ nav a:hover {
   border-bottom: 1px solid var(--navy-light);
 }
 
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+}
+
 .hero h1 {
   font-size: 3rem;
   margin: 0 0 16px;
@@ -108,6 +118,36 @@ nav a:hover {
   margin: 0 auto 32px;
 }
 
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.badge {
+  border: 1px solid var(--navy-light);
+  background: var(--navy-dark);
+  color: var(--cream-dim);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.badge.accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .btn {
   display: inline-block;
   background: var(--accent);
@@ -118,11 +158,24 @@ nav a:hover {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 0.9rem;
+  border: 1px solid var(--accent);
+  cursor: pointer;
 }
 
 .btn:hover {
   background: #d9b563;
   text-decoration: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--cream-dim);
+}
+
+.btn-outline:hover {
+  background: var(--navy-light);
+  color: var(--cream);
 }
 
 section {
@@ -169,21 +222,52 @@ h2 {
   font-size: 0.95rem;
 }
 
-.hours-table {
-  width: 100%;
-  max-width: 480px;
+.register-form {
+  max-width: 520px;
   margin: 0 auto;
-  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.hours-table td {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--navy-light);
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.hours-table td:last-child {
-  text-align: right;
-  color: var(--accent);
+.form-row label {
+  font-size: 0.9rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.5px;
+}
+
+.form-row input,
+.form-row textarea {
+  background: var(--navy-light);
+  border: 1px solid var(--navy-light);
+  color: var(--cream);
+  padding: 12px 14px;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.register-form .btn {
+  align-self: flex-start;
+}
+
+.form-note {
+  color: var(--cream-dim);
+  font-size: 0.85rem;
+  margin: 0;
 }
 
 .contact-grid {
