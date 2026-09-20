@@ -3,10 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Metro Library</title>
+    <meta name="description" content="Metro Library — your neighborhood home for books, learning, and community.">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <header>
+        <div class="navbar">
+            <div class="brand"><span class="mark">&#9776;</span> Metro Library</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#hours">Hours</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Metro Library</h1>
+            <p>A quiet place to read, research, and belong. Books, resources, and community programs for everyone in the neighborhood.</p>
+            <a href="#contact" class="btn">Visit Us</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About</h2>
+            <p class="section-sub">Serving readers and lifelong learners</p>
+            <p style="max-width:700px;margin:0 auto;color:var(--cream-dim);text-align:center;">
+                Metro Library is a community library offering a growing collection of books,
+                digital resources, and a welcoming space to study and connect. Whether you're
+                here to borrow a novel, do research, or attend a workshop, our doors are open.
+            </p>
+        </div>
+    </section>
+
+    <section id="services" class="alt">
+        <div class="container">
+            <h2>Services</h2>
+            <p class="section-sub">What we offer</p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Book Lending</h3>
+                    <p>A curated collection spanning fiction, non-fiction, and reference titles for every age group.</p>
+                </div>
+                <div class="card">
+                    <h3>Study Spaces</h3>
+                    <p>Quiet reading rooms and shared tables designed for focus and collaboration.</p>
+                </div>
+                <div class="card">
+                    <h3>Digital Access</h3>
+                    <p>Free Wi-Fi and public computers for research, e-books, and online learning.</p>
+                </div>
+                <div class="card">
+                    <h3>Community Events</h3>
+                    <p>Reading circles, workshops, and programs for kids, students, and adults alike.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hours">
+        <div class="container">
+            <h2>Hours</h2>
+            <p class="section-sub">Plan your visit</p>
+            <table class="hours-table">
+                <tr><td>Monday – Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+                <tr><td>Saturday</td><td>10:00 AM – 6:00 PM</td></tr>
+                <tr><td>Sunday</td><td>12:00 PM – 5:00 PM</td></tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="contact" class="alt">
+        <div class="container">
+            <h2>Contact</h2>
+            <p class="section-sub">We'd love to hear from you</p>
+            <div class="contact-grid">
+                <div>
+                    <h3>Location</h3>
+                    <p>Metro Library<br>Main Street Branch<br>Your City</p>
+                </div>
+                <div>
+                    <h3>Get in Touch</h3>
+                    <p>Email: hello@metrolibrary.in<br>Phone: (000) 000-0000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            &copy; <span id="year"></span> Metro Library. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
-
