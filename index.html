@@ -198,16 +198,16 @@
                         var linkHtml = link
                             ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener" class="job-link">View Notification &rarr;</a>'
                             : '<span class="job-link job-link-disabled">Details coming soon</span>';
+                        var postedHtml = job.postedDate
+                            ? '<div class="job-meta"><span>Posted: ' + escapeHtml(new Date(job.postedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })) + '</span></div>'
+                            : '';
 
                         return '' +
                             '<div class="job-card" style="animation-delay:' + (i * 0.35) + 's">' +
                                 '<span class="job-category ' + (isCentral ? 'central' : 'state') + '">' + categoryLabel + '</span>' +
                                 '<h3>' + escapeHtml(job.title) + '</h3>' +
                                 '<p class="job-board">' + escapeHtml(job.board) + '</p>' +
-                                '<div class="job-meta">' +
-                                    '<span>Vacancies: ' + escapeHtml(job.vacancies) + '</span>' +
-                                    '<span>Last Date: ' + escapeHtml(job.lastDate) + '</span>' +
-                                '</div>' +
+                                postedHtml +
                                 linkHtml +
                             '</div>';
                     }).join('');
