@@ -238,6 +238,11 @@ h2 {
   padding-top: 8px;
 }
 
+.jobs-toggle {
+  text-align: center;
+  margin-top: 32px;
+}
+
 .jobs-loading {
   grid-column: 1 / -1;
   text-align: center;

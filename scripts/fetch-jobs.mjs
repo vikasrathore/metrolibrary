@@ -14,7 +14,7 @@ const FEEDS = [
 
 const UA = "Mozilla/5.0 (compatible; MetroLibraryJobsBot/1.0; +https://metrolibrary.in)";
 const TIMEOUT_MS = 15000;
-const MAX_JOBS = 12;
+const MAX_JOBS = 18;
 
 const BOARD_PATTERNS = [
   ["UPSSSC", /upsssc/i],
@@ -31,6 +31,13 @@ const BOARD_PATTERNS = [
 ];
 
 const STATE_HINT = /uttar pradesh|\bup\s*police\b|upsssc|uppsc|uppbpb/i;
+
+// Other states' own commissions/boards and names — these postings aren't
+// relevant to a UP audience and, since our board detection above only
+// recognizes UP + central boards, would otherwise fall through and get
+// mislabeled as "Central". Drop them instead of mislabeling them.
+const OTHER_STATE_HINT =
+  /gujarat|\bgpsc\b|maharashtra|\bmpsc\b|madhya pradesh|\bmppsc\b|tamil nadu|\btnpsc\b|west bengal|\bwbpsc\b|rajasthan|\brpsc\b|\bharyana\b|\bhpsc\b|\bbihar\b|\bbpsc\b|jharkhand|\bjpsc\b|\bodisha\b|\bopsc\b|karnataka|\bkpsc\b|andhra pradesh|\bappsc\b|telangana|\btspsc\b|\bpunjab\b|\bppsc\b|uttarakhand|\bukpsc\b|\bkerala\b|\bassam\b|\bapsc\b|chhattisgarh|\bcgpsc\b|\bgoa\b|himachal|\bhppsc\b|\bjkpsc\b|manipur|meghalaya|mizoram|nagaland|\bsikkim\b|tripura/i;
 
 async function fetchWithTimeout(url, options = {}) {
   const controller = new AbortController();
@@ -137,9 +144,12 @@ const deduped = all.filter((item) => {
   return true;
 });
 
-deduped.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+const relevant = deduped.filter((item) => !OTHER_STATE_HINT.test(item.title));
+console.log(`Filtered out ${deduped.length - relevant.length} other-state postings (${relevant.length} remain)`);
 
-const jobs = deduped.slice(0, MAX_JOBS).map((item, i) => {
+relevant.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+const jobs = relevant.slice(0, MAX_JOBS).map((item, i) => {
   const board = detectBoard(item.title) || item.source;
   return {
     id: `job-${i}-${Buffer.from(item.link).toString("base64url").slice(0, 12)}`,
