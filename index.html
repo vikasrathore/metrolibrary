@@ -162,6 +162,7 @@
         (function loadJobs() {
             var grid = document.getElementById('jobsGrid');
             var updated = document.getElementById('jobsUpdated');
+            var INITIAL_VISIBLE = 6;
 
             function escapeHtml(value) {
                 return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
@@ -171,6 +172,27 @@
 
             function safeLink(url) {
                 return /^https?:\/\//i.test(url || '') ? url : null;
+            }
+
+            function renderJobCard(job, i) {
+                var isCentral = job.category === 'central';
+                var categoryLabel = isCentral ? 'Central' : 'UP State';
+                var link = safeLink(job.link);
+                var linkHtml = link
+                    ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener" class="job-link">View Notification &rarr;</a>'
+                    : '<span class="job-link job-link-disabled">Details coming soon</span>';
+                var postedHtml = job.postedDate
+                    ? '<div class="job-meta"><span>Posted: ' + escapeHtml(new Date(job.postedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })) + '</span></div>'
+                    : '';
+
+                return '' +
+                    '<div class="job-card" style="animation-delay:' + ((i % INITIAL_VISIBLE) * 0.35) + 's">' +
+                        '<span class="job-category ' + (isCentral ? 'central' : 'state') + '">' + categoryLabel + '</span>' +
+                        '<h3>' + escapeHtml(job.title) + '</h3>' +
+                        '<p class="job-board">' + escapeHtml(job.board) + '</p>' +
+                        postedHtml +
+                        linkHtml +
+                    '</div>';
             }
 
             fetch('jobs.json?t=' + Date.now())
@@ -191,26 +213,22 @@
                         return;
                     }
 
-                    grid.innerHTML = jobs.map(function (job, i) {
-                        var isCentral = job.category === 'central';
-                        var categoryLabel = isCentral ? 'Central' : 'UP State';
-                        var link = safeLink(job.link);
-                        var linkHtml = link
-                            ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener" class="job-link">View Notification &rarr;</a>'
-                            : '<span class="job-link job-link-disabled">Details coming soon</span>';
-                        var postedHtml = job.postedDate
-                            ? '<div class="job-meta"><span>Posted: ' + escapeHtml(new Date(job.postedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })) + '</span></div>'
-                            : '';
+                    var visible = jobs.slice(0, INITIAL_VISIBLE);
+                    var rest = jobs.slice(INITIAL_VISIBLE);
 
-                        return '' +
-                            '<div class="job-card" style="animation-delay:' + (i * 0.35) + 's">' +
-                                '<span class="job-category ' + (isCentral ? 'central' : 'state') + '">' + categoryLabel + '</span>' +
-                                '<h3>' + escapeHtml(job.title) + '</h3>' +
-                                '<p class="job-board">' + escapeHtml(job.board) + '</p>' +
-                                postedHtml +
-                                linkHtml +
-                            '</div>';
-                    }).join('');
+                    grid.innerHTML = visible.map(renderJobCard).join('');
+
+                    if (rest.length) {
+                        var toggle = document.createElement('div');
+                        toggle.className = 'jobs-toggle';
+                        toggle.innerHTML = '<button type="button" class="btn btn-outline" id="jobsShowMore">Show More (' + rest.length + ')</button>';
+                        grid.parentNode.appendChild(toggle);
+
+                        document.getElementById('jobsShowMore').addEventListener('click', function () {
+                            grid.insertAdjacentHTML('beforeend', rest.map(renderJobCard).join(''));
+                            toggle.remove();
+                        });
+                    }
                 })
                 .catch(function () {
                     grid.innerHTML = '<p class="jobs-loading">Could not load job listings right now.</p>';
